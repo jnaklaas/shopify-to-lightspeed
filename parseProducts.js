@@ -146,7 +146,7 @@ converter.fromFile(inputFile, function (err, shopifyProducts) {
 var handleString = function(string, name){
     if(string.length < 2 ) return string;
     //if contains quotes or delimiter, surround with quotes and double quotes
-    if(string.indexOf('"' > -1) || string.indexOf(';'  > -1)){
+    if(string.indexOf('"' > -1) || string.indexOf(delimiter  > -1)){
         string = '"' + string.replace(/"/g, '""') + '"';
     }
     return string;
