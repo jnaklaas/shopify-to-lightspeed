@@ -4,12 +4,20 @@
 var Converter = require("csvtojson").Converter,
     jsonexport = require('jsonexport'),
     fs = require('fs'),
-    ProgressBar = require('progress');
+    ProgressBar = require('progress'),
+    argv = require('minimist')(process.argv.slice(2));
 
-var inputFile = process.argv[2],
-    outputFile = (process.argv[3]) ? process.argv[3] : 'output.csv';
+var inputFile = argv._[0],
+    outputFile = (argv._[1]) ? argv._[1] : 'output.csv';
 
-var converter = new Converter({delimiter: ";"});
+var delimiter;
+switch(argv.delimiter){
+    case "comma":       delimiter = ","; break;
+    case "semicolon":   delimiter = ";"; break;
+    default:            delimiter = ";";
+}
+
+var converter = new Converter({"delimiter": delimiter});
 
 converter.fromFile(inputFile, function (err, shopifyProducts) {
     if (err) return console.log("converter error: " + err);
