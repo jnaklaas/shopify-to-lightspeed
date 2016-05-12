@@ -5,7 +5,6 @@ var Converter = require("csvtojson").Converter,
     jsonexport = require('jsonexport'),
     fs = require('fs'),
     ProgressBar = require('progress');
-    //jsdom = require("jsdom");
 
 var inputFile = process.argv[2],
     outputFile = (process.argv[3]) ? process.argv[3] : 'output.csv';
