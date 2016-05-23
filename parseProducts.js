@@ -17,6 +17,8 @@ switch(argv.delimiter){
     default:            delimiter = ";";
 }
 
+var tabs = (argv.tabs) ? true : false;
+
 var converter = new Converter({"delimiter": delimiter});
 
 converter.fromFile(inputFile, function (err, shopifyProducts) {
@@ -74,7 +76,7 @@ converter.fromFile(inputFile, function (err, shopifyProducts) {
         lightspeedProduct.EN_Title_Long = shopifyProduct.Title;
         var result = shopifyProduct["Body (HTML)"].match(/<p(.*?)<\/p>/m);
         lightspeedProduct.EN_Description_Short = (result)? result[0].replace(/<\/?[^>]+(>|$)/g, "") : "";
-        lightspeedProduct.EN_Description_Long = shopifyProduct["Body (HTML)"];
+        lightspeedProduct.EN_Description_Long = shopifyProduct["Body (HTML)"].replace(/<h6.*?>/g, "\n—").replace(/<\/h6>/g, "—\n");
         lightspeedProduct.EN_Variant = "";
         if(shopifyProduct["Option1 Name"] !== "Title" && shopifyProduct["Option1 Name"] !== "")
             lightspeedProduct.EN_Variant += shopifyProduct["Option1 Name"] + ": " + shopifyProductVariant['Option1 Value'];
